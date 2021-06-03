@@ -2,8 +2,8 @@ var express = require("express");
 const app = express();
 require("dotenv").config();
 var apiRouter = require("./routes/api");
-var apiResponse = require("./utils/apiResponse");
 var cors = require("cors");
+const { connectWithRetry } = require("./lib/dbConfig");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.status(200).send({
         "error": false,
         "code": 200,
-        "msg": "Welcome to Location Service !!",
+        "msg": "Welcome to User Service !!",
     });
 });
 
@@ -31,10 +31,6 @@ app.all("*", function (req, res) {
     })
 });
 
-app.use((err, req, res) => {
-    if (err.name == "UnauthorizedError") {
-        return apiResponse.unauthorizedResponse(res, err.message);
-    }
-});
+connectWithRetry()
 
 module.exports = app;

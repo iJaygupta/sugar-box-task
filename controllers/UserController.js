@@ -9,13 +9,13 @@ const { generateAuthToken } = require("../lib/auth");
  * Register A User.
  *
  * @param {String} name
- * @param {Object} email
- * @param {Object} password
- * @param {Object} addressLine
- * @param {Object} city
- * @param {Object} state
- * @param {Object} zipCode
- * @param {Object} phoneNo
+ * @param {String} email
+ * @param {String} password
+ * @param {String} addressLine
+ * @param {String} city
+ * @param {String} state
+ * @param {String} zipCode
+ * @param {String} phoneNo
  * 
  * @returns {Object}
  */
@@ -36,8 +36,8 @@ exports.registerUser = async (request, response) => {
 /**
  * Register A User.
  *
- * @param {Object} email
- * @param {Object} password
+ * @param {String} email
+ * @param {String} password
  * 
  * @returns {Object}
  */
@@ -58,6 +58,7 @@ exports.logIn = async (request, response) => {
             name: userDetail.name,
             email: userDetail.email
         }
+        delete userDetail["password"]
         let token = await generateAuthToken(payload);
         let result = {
             token,
@@ -72,11 +73,11 @@ exports.logIn = async (request, response) => {
 /**
  * Get List of Users.
  *
- * @param {string}  page
- * @param {string}  pagination
- * @param {string}  searchKeyword 
- * @param {string}  limit
- * @param {string}  skip
+ * @param {Number}   page
+ * @param {Boolean}  pagination
+ * @param {String}   searchKeyword
+ * @param {Number}   limit
+ * @param {Number}   skip
  *
  * @returns {Object}
  */
@@ -156,7 +157,7 @@ exports.listUsers = (request, response) => {
 /**
  * Get Location.
  * 
- * @param {string} id
+ * @param {String} id
  *
  * @returns {Object}
  */
@@ -178,7 +179,7 @@ exports.getUser = async (request, response) => {
 /**
  *   Update Location.
  *
- * @param {string} id
+ * @param {String} id
  *
  * @returns {Object}
  */
@@ -209,7 +210,7 @@ exports.updateUser = async (request, response) => {
 /**
  * Delete Location.
  *
- * @param {string} id
+ * @param {String} id
  *
  * @returns {Object}
  */
